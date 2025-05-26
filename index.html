@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Morse Code Translator</title>
+  <style>
+   body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background: linear-gradient(266deg, #7917c9, #d80657);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      width: 400px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 10px;
+    }
+
+    .description {
+    font-size: 0.95em;
+    margin-bottom: 15px;
+    color: rgb(0 116 215);font-size: 0.95em;
+    }
+
+    textarea {
+      width: 100%;
+      height: 60px;
+      padding: 10px;
+      font-size: 1em;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      resize: none;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 0.9em;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+<h1><i class="fa-solid fa-language"></i> Morse Code Translator</h1>
+
+    <p class="description">Enter plain text to <strong>encode</strong> to Morse code, or enter Morse code to <strong>decode</strong> to text.</p>
+
+    <textarea id="input" placeholder="Enter text or Morse code here..."></textarea>
+
+    <div class="buttons">
+      <button onclick="encode()">Encode</button>
+      <button onclick="decode()">Decode</button>
+    </div>
+
+    <textarea id="output" readonly placeholder="Result will appear here..."></textarea>
+  </div>
+
+  <script>
+    const morseCodeMap = {
+      A: '.-',    B: '-...',  C: '-.-.',
+      D: '-..',   E: '.',     F: '..-.',
+      G: '--.',   H: '....',  I: '..',
+      J: '.---',  K: '-.-',   L: '.-..',
+      M: '--',    N: '-.',    O: '---',
+      P: '.--.',  Q: '--.-',  R: '.-.',
+      S: '...',   T: '-',     U: '..-',
+      V: '...-',  W: '.--',   X: '-..-',
+      Y: '-.--',  Z: '--..',
+      0: '-----', 1: '.----', 2: '..---',
+      3: '...--', 4: '....-', 5: '.....',
+      6: '-....', 7: '--...', 8: '---..',
+      9: '----.', ' ': '/'
+    };
+
+    const textToMorse = (text) => {
+      return text.toUpperCase().split('').map(char => morseCodeMap[char] || '').join(' ');
+    };
+
+    const morseToText = (morse) => {
+      const reversedMap = Object.fromEntries(
+        Object.entries(morseCodeMap).map(([k, v]) => [v, k])
+      );
+      return morse.trim().split(' ').map(code => reversedMap[code] || '').join('');
+    };
+
+    function encode() {
+      const input = document.getElementById('input').value;
+      const output = textToMorse(input);
+      document.getElementById('output').value = output;
+    }
+
+    function decode() {
+      const input = document.getElementById('input').value;
+      const output = morseToText(input);
+      document.getElementById('output').value = output;
+    }
+  </script>
+</body>
+</html>
+
